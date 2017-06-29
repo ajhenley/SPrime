@@ -26,18 +26,13 @@ public class BookController {
         return "bookform";
     }
     @PostMapping("/add")
-    public String processBook(@ModelAttribute Book book, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "bookform";
-        }
+    public String processBook(@ModelAttribute Book book){
         bookRepository.save(book);
         return "redirect:/books/list";
     }
     @RequestMapping("/edit/{id}")
     public String editBook(@PathVariable("id")int bookid, Model model){
-        Book book = new Book();
-        book = bookRepository.findOne(bookid);
-        model.addAttribute("book", book);
+        model.addAttribute("book", bookRepository.findOne(bookid));
         return "bookform";
     }
     @RequestMapping("/delete/{id}")
